@@ -1,14 +1,21 @@
 import { Link, Outlet } from "react-router-dom";
 import { css } from "../../styles/EmotionCSS";
 import { useStyles } from "../../styles/useStyles";
+import { ShoppingCartButton } from "./ShoppingCartButton";
 
 const layoutStyles = () => ({
   root: css`
     display: flex;
+    flex-direction: column;
+  `,
+  header: css`
+    display: flex;
     flex-direction: row;
   `,
   nav: css`
-    width: 100px;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
   `,
   main: css`
     height: 100vh;
@@ -26,28 +33,19 @@ export const Layout = () => {
 
   return (
     <div className={styles.root}>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/catalog">Catalog</Link>
-          </li>
-          <li>
-            <Link to="/orders">Orders</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/profile">Profile</Link>
-          </li>
-          <li>
-            <Link to="/terms">Terms</Link>
-          </li>
-        </ul>
-      </nav>
+      <header className={styles.nav}>
+        <nav className={styles.nav}>
+          <Link to="/">Home</Link>
+          <Link to="/catalog">Catalog</Link>
+          <Link to="/orders">Orders</Link>
+          <Link to="/about">About</Link>
+          <Link to="/profile">Profile</Link>
+          <Link to="/terms">Terms</Link>
+        </nav>
+        <div>
+          <ShoppingCartButton />
+        </div>
+      </header>
       <main className={styles.main}>
         <div className={styles.page}>
           <Outlet />

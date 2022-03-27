@@ -1,20 +1,16 @@
-import { Button } from "@mui/material";
 import {
+  Button,
   Card,
   CardActions,
   CardContent,
   CardMedia,
   Typography,
 } from "@mui/material";
+import { useContext } from "react";
+import { IItemCard } from "../interfaces/IItemCard";
 import { css } from "../styles/EmotionCSS";
 import { useStyles } from "../styles/useStyles";
-
-type ItemCardProps = {
-  id: string;
-  name: string;
-  price: number;
-  imageUrl?: string;
-};
+import { ShoppingCartContext } from "./ShoppingCartContext/ShoppingCartContextProvider";
 
 const itemCardStyles = () => ({
   card: css`
@@ -23,13 +19,13 @@ const itemCardStyles = () => ({
   `,
 });
 
-export const ItemCard = ({
-  name,
-  price,
-  imageUrl,
-  ...props
-}: ItemCardProps) => {
+export const ItemCard = ({ name, price, imageUrl, ...props }: IItemCard) => {
   const styles = useStyles(itemCardStyles);
+  const { append } = useContext(ShoppingCartContext);
+
+  const addInShoppingCartHandler = () => {
+    append({ ...props, name, price, imageUrl });
+  };
 
   return (
     <Card {...props} className={styles.card}>
@@ -40,7 +36,9 @@ export const ItemCard = ({
       </CardContent>
       <CardActions>
         <Button variant="outlined">Подробно</Button>
-        <Button variant="contained">В корзину</Button>
+        <Button variant="contained" onClick={() => addInShoppingCartHandler()}>
+          В корзину
+        </Button>
       </CardActions>
     </Card>
   );
